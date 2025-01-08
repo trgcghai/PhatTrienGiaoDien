@@ -40,35 +40,32 @@
 //   }
 // };
 
-// // test data 1
 // console.log("Data 1 >>>, ", solveChallenge3([96, 108, 89], [88, 91, 110]));
-// // test data bonus 1
 // console.log(
 //   "Data bonus 1 >>>, ",
 //   solveChallenge3([97, 112, 101], [109, 95, 123])
 // );
-// // test data bonus 2
 // console.log(
 //   "Data bonus 2 >>>, ",
 //   solveChallenge3([97, 112, 101], [109, 95, 106])
 // );
 
 //Code Challenge #4
-const calTip = (bill) => {
-  return bill >= 50 && bill <= 300 ? bill * 0.15 : bill * 0.2;
-};
+// const calTip = (bill) => {
+//   return bill >= 50 && bill <= 300 ? bill * 0.15 : bill * 0.2;
+// };
 
-const solveChallenge4 = (bill) => {
-  const tip = calTip(bill);
+// const solveChallenge4 = (bill) => {
+//   const tip = calTip(bill);
 
-  console.log(
-    `The bill was ${bill}, the tip was ${tip}, the total value ${bill + tip}`
-  );
-};
+//   console.log(
+//     `The bill was ${bill}, the tip was ${tip}, the total value ${bill + tip}`
+//   );
+// };
 
-console.log("Test 1 >>");
-solveChallenge4(275);
-console.log("Test 2 >>");
-solveChallenge4(40);
-console.log("Test 3 >>");
-solveChallenge4(430);
+// console.log("Test 1 >>");
+// solveChallenge4(275);
+// console.log("Test 2 >>");
+// solveChallenge4(40);
+// console.log("Test 3 >>");
+// solveChallenge4(430);
