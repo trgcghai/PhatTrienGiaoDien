@@ -2,5 +2,14 @@ const calculateBMI = (mass, height) => {
   return mass / (height * height);
 };
 
-console.log("Mark's BMI >> ", calculateBMI(78, 1.68));
-console.log("John's BMI >> ", calculateBMI(92, 1.95));
+let markBMI = calculateBMI(78, 1.68);
+let JohnBMI = calculateBMI(92, 1.95);
+
+console.log("Mark's BMI >> ", markBMI);
+console.log("John's BMI >> ", JohnBMI);
+
+if (markBMI > JohnBMI) {
+  console.log("Mark's BMI is higher than John's!");
+} else {
+  console.log("John's BMI is higher than Mark's!");
+}
