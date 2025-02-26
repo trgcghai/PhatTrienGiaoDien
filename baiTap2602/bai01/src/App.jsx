@@ -24,10 +24,10 @@ function App() {
             <div className='grid grid-cols-2 grid-rows-4 gap-4 py-3'>
               {['Pan-fried', 'Stir-fried', 'Grilled', 'Roasted', 'Sauteed', 'Baked', 'Steamed', 'Stewed'].map(item => {
                 return (
-                  <div className='flex gap-2 items-center'>
-                <input type="checkbox" name="" id="" />
-                <p>{item}</p>
-              </div>
+                  <div key={item} className='flex gap-2 items-center'>
+                    <input type="checkbox" name="" id="" />
+                    <p>{item}</p>
+                  </div>
                 )
               })}
             </div>
@@ -41,36 +41,36 @@ function App() {
             <input type="range" name="" id="" className='w-full' />
           </div>
           <div className='border border-gray-300 mb-3'></div>
-            <p className='flex items-center justify-between'>
-              <p className='text-lg font-semibold'>Rating</p>
-              <img src={arrowUp} className='w-[30px]' alt="" />
-            </p>
-            <div>
-              <div className='py-2 flex items-center gap-2'>
-                <input type="checkbox" name="" id="" />
-                <label htmlFor="">⭐⭐⭐⭐⭐</label>
-              </div>
-              <div className='py-2 flex items-center gap-2'>
-                <input type="checkbox" name="" id="" />
-                <label htmlFor="">⭐⭐⭐⭐</label>
-              </div>
-              <div className='py-2 flex items-center gap-2'>
-                <input type="checkbox" name="" id="" />
-                <label htmlFor="">⭐⭐⭐</label>
-              </div>
-              <div className='py-2 flex items-center gap-2'>
-                <input type="checkbox" name="" id="" />
-                <label htmlFor="">⭐⭐</label>
-              </div>
-              <div className='py-2 flex items-center gap-2'>
-                <input type="checkbox" name="" id="" />
-                <label htmlFor="">⭐</label>
-              </div>
+          <p className='flex items-center justify-between'>
+            <p className='text-lg font-semibold'>Rating</p>
+            <img src={arrowUp} className='w-[30px]' alt="" />
+          </p>
+          <div>
+            <div className='py-2 flex items-center gap-2'>
+              <input type="checkbox" name="" id="" />
+              <label htmlFor="">⭐⭐⭐⭐⭐</label>
             </div>
-          </div> 
+            <div className='py-2 flex items-center gap-2'>
+              <input type="checkbox" name="" id="" />
+              <label htmlFor="">⭐⭐⭐⭐</label>
+            </div>
+            <div className='py-2 flex items-center gap-2'>
+              <input type="checkbox" name="" id="" />
+              <label htmlFor="">⭐⭐⭐</label>
+            </div>
+            <div className='py-2 flex items-center gap-2'>
+              <input type="checkbox" name="" id="" />
+              <label htmlFor="">⭐⭐</label>
+            </div>
+            <div className='py-2 flex items-center gap-2'>
+              <input type="checkbox" name="" id="" />
+              <label htmlFor="">⭐</label>
+            </div>
+          </div>
+        </div>
         <div className='flex-[7] flex items-center justify-center'>
           <div className='flex flex-col justify-center items-center'>
-            <p className='font-bold text-2xl'>Sorry, no results were found for "cakescascas"</p>
+            <p className='font-bold text-2xl'>Sorry, no results were found for &quot;cakescascas&quot;</p>
             <div>
               <img src={noResult} alt="" />
             </div>
