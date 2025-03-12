@@ -19,7 +19,7 @@ const Filter = () => {
                     {['Pan-fried', 'Stir-fried', 'Grilled', 'Roasted', 'Sauteed', 'Baked', 'Steamed', 'Stewed'].map(item => {
                         return (
                             <div key={item} className='flex gap-2 items-center'>
-                                <input type="checkbox" name="" id="" />
+                                <input type="checkbox" className='accent-main' name="" id="" />
                                 <p>{item}</p>
                             </div>
                         )
