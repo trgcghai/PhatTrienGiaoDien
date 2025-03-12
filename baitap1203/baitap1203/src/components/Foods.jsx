@@ -1,15 +1,8 @@
 import { useEffect, useState } from "react";
-import FoodItem from "./FoodItem";
-
-export type Food = {
-  name: string;
-  cookTime: number;
-  imgUrl: string;
-  id: string;
-};
+import DishCard from "./DishCard";
 
 const Foods = () => {
-  const [data, setData] = useState<Food[]>([]);
+  const [data, setData] = useState([]);
 
   useEffect(() => {
     const url = "https://67c7c86ec19eb8753e7aba01.mockapi.io/foods";
@@ -28,9 +21,9 @@ const Foods = () => {
   }, []);
 
   return (
-    <div className="grid grid-cols-4 gap-4">
+    <div className="grid grid-cols-3 gap-8 mt-8">
       {data.map((food) => (
-        <FoodItem key={food.id} food={food} />
+        <DishCard key={food.id} name={food.name} imgUrl={food.imgUrl} cookTime={food.cookTime} />
       ))}
     </div>
   );

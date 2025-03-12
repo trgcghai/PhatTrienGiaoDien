@@ -2,14 +2,14 @@ import React from 'react'
 
 const Footer = () => {
     return (
-        <div className='bg-[#1D2128] p-8 grid grid-cols-4 gap-20'>
+        <div className='bg-gray-dark p-8 grid grid-cols-4 gap-20'>
             <div className='col-span-2'>
                 <div className='space-y-2 mb-40'>
                     <p className='text-lg font-bold text-white'>About us</p>
                     <p className='text-lg text-white'>Welcome to our website, a wonderful place to explore and learn how to cook like a pro.</p>
                     <div className='flex gap-4'>
                         <input placeholder='Enter your email' className='rounded-lg p-2 border bg-white w-[500px]' type="text" name="" id="" />
-                        <button className='p-2 rounded-lg bg-[#F44B87FF] w-[100px] text-white'>Send</button>
+                        <button className='p-2 rounded-lg bg-main w-[100px] text-white'>Send</button>
                     </div>
                 </div>
                 <div className='gap-4'>
