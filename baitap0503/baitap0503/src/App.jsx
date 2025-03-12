@@ -1,10 +1,10 @@
 import './App.css'
 import DishCard from './components/DishCard'
+import Foods from './components/Foods'
 import Footer from './components/Footer'
 import Header from './components/Header'
 import Pagination from './components/Pagination'
 import UserProfile from './components/UserProfile'
-import { data } from './data'
 
 function App() {
 
@@ -28,11 +28,7 @@ function App() {
           </ul>
         </div>
 
-        <div className='grid grid-cols-4 grid-rows-2 gap-12 mt-8'>
-          {data.map(item => (
-            <DishCard name={item.name} time={item.time} key={item.id} />
-          ))}
-        </div>
+        <Foods />
 
         <Pagination />
       </div>
