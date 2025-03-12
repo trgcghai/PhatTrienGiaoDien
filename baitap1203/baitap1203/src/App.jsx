@@ -10,7 +10,7 @@ function App() {
     <div>
       <Header />
 
-      <div className='flex items-start gap-6 justify-center gap-8 w-[1460px] mx-auto my-12'>
+      <div className='flex items-start gap-12 justify-center w-[1460px] mx-auto my-12'>
         <Filter />
         <div className='flex-[7]'>
           <div className='flex items-center justify-between'>

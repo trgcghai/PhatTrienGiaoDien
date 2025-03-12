@@ -2,7 +2,7 @@ import React from 'react'
 
 const DishCard = ({ name, cookTime, imgUrl }) => {
     return (
-        <div className='rounded-lg border-[0.5px] border-[#424955FF] overflow-hidden'>
+        <div className='rounded-lg border-[0.5px] border-gray overflow-hidden'>
             <img src={imgUrl} className='w-full scale-110' alt="" />
             <div className='p-4'>
                 <div className='flex justity-between gap-4 items-center mb-6 h-16'>

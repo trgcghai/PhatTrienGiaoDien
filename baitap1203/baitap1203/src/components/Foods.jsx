@@ -21,7 +21,7 @@ const Foods = () => {
   }, []);
 
   return (
-    <div className="grid grid-cols-3 gap-8 mt-8">
+    <div className="grid grid-cols-3 gap-10 mt-8">
       {data.map((food) => (
         <DishCard key={food.id} name={food.name} imgUrl={food.imgUrl} cookTime={food.cookTime} />
       ))}
