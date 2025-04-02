@@ -43,26 +43,28 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="border h-screen p-4">
-      <img src="/logo.png" className="h-16" />
-      <div className="mt-4 space-y-2">
-        {items.map((item) => {
-          return (
-            <NavLink
-              key={item.path}
-              to={item.path}
-              className={({ isActive }) => {
-                return (
-                  "w-full rounded-lg block p-2 text-gray-500" +
-                  (isActive ? " font-semibold text-white bg-[#F44B87]" : "")
-                );
-              }}
-            >
-              <FontAwesomeIcon icon={item.icon} className="mr-2 w-6" />
-              <span>{item.title}</span>
-            </NavLink>
-          );
-        })}
+    <nav className="border-r border-gray-300 h-screen p-4 flex flex-col justify-between">
+      <div>
+        <img src="/logo.png" className="h-16" />
+        <div className="mt-4 space-y-2">
+          {items.map((item) => {
+            return (
+              <NavLink
+                key={item.path}
+                to={item.path}
+                className={({ isActive }) => {
+                  return (
+                    "w-full rounded-lg block p-2 text-gray-500" +
+                    (isActive ? " font-semibold text-white bg-[#F44B87]" : "")
+                  );
+                }}
+              >
+                <FontAwesomeIcon icon={item.icon} className="mr-2 w-6" />
+                <span>{item.title}</span>
+              </NavLink>
+            );
+          })}
+        </div>
       </div>
 
       <div className="bg-[#F0F6FF] p-2 rounded-lg">
