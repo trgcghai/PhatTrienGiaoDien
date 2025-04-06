@@ -27,6 +27,15 @@ const TableData = ({ data }) => {
           </div>
         ),
         1: (data) => <p className="text-md">{data}</p>,
+        2: (data) => (
+          <p className="text-md">$ {Number(data).toLocaleString()}</p>
+        ),
+        3: (data) => {
+          const [year, month, day] = data.split("-");
+          const date =
+            month.padStart(0, 2) + "/" + day.padStart(0, 2) + "/" + year;
+          return <p className="text-md">{date}</p>;
+        },
         4: (data) => {
           if (data == "New") {
             return (

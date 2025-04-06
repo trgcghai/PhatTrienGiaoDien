@@ -6,27 +6,39 @@ import { ModalContext } from "../../context/ModalContext";
 const EditModal = () => {
   const { toggleModal, data } = useContext(ModalContext);
   const [formValue, setFormValue] = useState({
-    name: "",
-    company: "",
+    customerName: "",
+    companyName: "",
     orderValue: "",
     orderDate: "",
     status: "",
+    id: "",
   });
-
-  console.log(data);
-
-  function formatDateToISO(dateStr) {
-    const [day, month, year] = dateStr.split("/");
-    return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
-  }
 
   useEffect(() => {
     setFormValue({
       ...data,
-      orderValue: data.orderValue.replace("$", ""),
-      orderDate: formatDateToISO(data.orderDate),
     });
   }, [data]);
+
+  const updateData = async () => {
+    const response = await fetch(
+      `https://66eee7fa3ed5bb4d0bf24f82.mockapi.io/api/v1/vocabularyDB/customer/${formValue.id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formValue),
+      }
+    );
+    const data = await response.json();
+    return data;
+  };
+
+  const handleSubmit = async () => {
+    await updateData();
+    toggleModal();
+  };
 
   return (
     <div className="absolute top-[50%] left-[50%] translate-[-50%] z-50 bg-white rounded-lg p-4 min-w-[500px]">
@@ -40,7 +52,7 @@ const EditModal = () => {
       </div>
 
       <div>
-        <form action="">
+        <form action="" method="">
           <div className="mb-4">
             <label htmlFor="" className="block text-md text-gray-500">
               Customer name
@@ -49,7 +61,7 @@ const EditModal = () => {
               type="text"
               name=""
               id=""
-              value={formValue.name}
+              value={formValue.customerName}
               onChange={(e) => {
                 setFormValue({
                   ...formValue,
@@ -67,9 +79,9 @@ const EditModal = () => {
               type="text"
               name=""
               id=""
-              value={formValue.company}
+              value={formValue.companyName}
               onChange={(e) => {
-                setFormValue({ ...formValue, company: e.target.value });
+                setFormValue({ ...formValue, companyName: e.target.value });
               }}
               className="border-[1px] border-gray-300 rounded-lg px-4 py-2 w-full"
             />
@@ -132,7 +144,10 @@ const EditModal = () => {
         >
           Cancel
         </button>
-        <button className="w-[100px] cursor-pointer rounded-lg px-3 py-2 text-white text-lg bg-[#F44B87]">
+        <button
+          className="w-[100px] cursor-pointer rounded-lg px-3 py-2 text-white text-lg bg-[#F44B87]"
+          onClick={handleSubmit}
+        >
           Confirm
         </button>
       </div>

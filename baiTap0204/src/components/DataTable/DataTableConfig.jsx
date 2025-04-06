@@ -15,8 +15,8 @@ export const options = {
 };
 
 export const columns = [
-  { data: "name" },
-  { data: "company" },
+  { data: "customerName" },
+  { data: "companyName" },
   { data: "orderValue" },
   { data: "orderDate" },
   { data: "status" },
