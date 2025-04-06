@@ -1,19 +1,15 @@
 import DataTable from "datatables.net-react";
 import DT from "datatables.net-dt";
+import { columns, options } from "./DataTableConfig";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useContext } from "react";
+import { ModalContext } from "../../context/ModalContext";
 
 const TableData = ({ data }) => {
   DataTable.use(DT);
 
-  const columns = [
-    { data: "name" },
-    { data: "company" },
-    { data: "orderValue" },
-    { data: "orderDate" },
-    { data: "status" },
-    { data: "id" },
-  ];
+  const { toggleModal, handleSetData } = useContext(ModalContext);
 
   return (
     <DataTable
@@ -63,7 +59,10 @@ const TableData = ({ data }) => {
             <div className="flex items-center justify-center">
               <button
                 className="text-gray-400 px-2 cursor-pointer aspect-square rounded-sm border-2 border-gray-300"
-                onClick={() => console.log(row)}
+                onClick={() => {
+                  toggleModal();
+                  handleSetData(row);
+                }}
               >
                 <FontAwesomeIcon icon={faPen} />
               </button>
@@ -71,21 +70,7 @@ const TableData = ({ data }) => {
           );
         },
       }}
-      options={{
-        paging: true,
-        lengthChange: false,
-        searching: false,
-        ordering: true,
-        pageLength: 6,
-        dom: '<"top"lf>rt<"bottom d-flex align-items-center justify-content-between"ip><"clear">',
-        language: {
-          info: "_TOTAL_ results",
-        },
-        pagingType: "simple_numbers",
-        renderer: {
-          pageButton: "bootstrap",
-        },
-      }}
+      options={options}
     >
       <thead>
         <tr>
