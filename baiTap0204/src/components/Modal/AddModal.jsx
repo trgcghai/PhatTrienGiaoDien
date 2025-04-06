@@ -1,12 +1,12 @@
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { ModalContext } from "../../context/ModalContext";
-import { useUpdateCustomer } from "../../hooks/useFetchCustomer";
+import { useCreateCustomer } from "../../hooks/useFetchCustomer";
 
-const EditModal = () => {
-  const { toggleModal, data, onSuccess } = useContext(ModalContext);
-  const { updateCustomer, loading, error } = useUpdateCustomer();
+const AddModal = () => {
+  const { toggleModal, onSuccess } = useContext(ModalContext);
+  const { createCustomer, loading, error } = useCreateCustomer();
   const [formValue, setFormValue] = useState({
     customerName: "",
     companyName: "",
@@ -16,15 +16,9 @@ const EditModal = () => {
     id: "",
   });
 
-  useEffect(() => {
-    setFormValue({
-      ...data,
-    });
-  }, [data]);
-
   const handleSubmit = async () => {
     try {
-      await updateCustomer(formValue.id, formValue);
+      await createCustomer(formValue);
       toggleModal();
 
       if (onSuccess && typeof onSuccess === "function") {
@@ -152,4 +146,4 @@ const EditModal = () => {
     </div>
   );
 };
-export default EditModal;
+export default AddModal;

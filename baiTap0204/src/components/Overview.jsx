@@ -7,7 +7,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons/faCartShopping";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useEffect, useState } from "react";
+import { useStats } from "../hooks/useFetchOverview";
 
 const OverviewCard = ({ title, value, percent, isIncrease, icon }) => {
   return (
@@ -37,18 +37,7 @@ const OverviewCard = ({ title, value, percent, isIncrease, icon }) => {
 };
 
 const Overview = () => {
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await fetch(
-        "https://67dfef6b7635238f9aabca61.mockapi.io/static/"
-      );
-      const data = await response.json();
-      setData(data);
-    };
-    fetchData();
-  });
+  const { stats, loading, error } = useStats();
 
   return (
     <div className="p-6">
@@ -60,9 +49,12 @@ const Overview = () => {
         <span className="text-xl font-bold">Overview</span>
       </p>
 
+      {loading && <p>Loading stats...</p>}
+      {error && <p className="text-red-500">Error loading stats: {error}</p>}
+
       <div className="mt-4 flex items-center justify-between gap-4">
-        {data &&
-          data.map((item) => (
+        {stats &&
+          stats.map((item) => (
             <OverviewCard
               key={item.id}
               title={item.title}

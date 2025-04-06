@@ -4,15 +4,16 @@ export const ModalContext = createContext({
   isOpen: false,
   data: {},
   toggleModal: () => {},
+  onSuccess: null,
+  setOnSuccess: () => {},
 });
 
 const ModalContextProvider = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [data, setData] = useState({});
+  const [onSuccess, setOnSuccess] = useState(null);
 
   const toggleModal = () => {
-    console.log("toggleModal called");
-    console.log("isOpen before toggle:", isOpen);
     setIsOpen(!isOpen);
   };
 
@@ -21,7 +22,16 @@ const ModalContextProvider = ({ children }) => {
   };
 
   return (
-    <ModalContext.Provider value={{ isOpen, toggleModal, data, handleSetData }}>
+    <ModalContext.Provider
+      value={{
+        isOpen,
+        toggleModal,
+        data,
+        handleSetData,
+        onSuccess,
+        setOnSuccess,
+      }}
+    >
       {children}
     </ModalContext.Provider>
   );

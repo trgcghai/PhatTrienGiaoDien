@@ -2,10 +2,10 @@ import { Outlet } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Header from "../components/Header";
 import Overview from "../components/Overview";
-import EditModal from "../components/Modal/EditModal";
 import Backdrop from "../components/Backdrop";
 import { useContext } from "react";
 import { ModalContext } from "../context/ModalContext";
+import EditModal from "../components/Modal/EditModal";
 
 const RootLayout = () => {
   const { isOpen } = useContext(ModalContext);
