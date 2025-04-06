@@ -1,1 +1,100 @@
 @import "tailwindcss";
+
+.d-flex {
+  display: flex;
+}
+
+.align-items-center {
+  align-items: center;
+}
+
+.justify-content-between {
+  justify-content: space-between;
+}
+
+/* Optional: Add some padding or margin for better spacing */
+.bottom {
+  padding: 10px 0;
+}
+
+/* Style the pagination container */
+.dataTables_paginate {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Space between pagination buttons */
+}
+
+/* Style the Previous and Next buttons */
+.paginate_button.previous,
+.paginate_button.next {
+  background: none;
+  border: none;
+  font-size: 16px;
+  color: #333;
+  cursor: pointer;
+  padding: 5px 10px;
+}
+
+.paginate_button.previous:hover,
+.paginate_button.next:hover {
+  color: #007bff; /* Hover color */
+}
+
+/* Style the page number buttons */
+.paginate_button {
+  background: none;
+  border: none;
+  font-size: 16px;
+  color: #333;
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+/* Style the active page button */
+.paginate_button.current {
+  background: #ff69b4; /* Pink background for the active page */
+  color: white;
+  border-radius: 50%; /* Circular button */
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Style the ellipsis */
+.paginate_button.disabled {
+  cursor: default;
+  color: #999;
+}
+
+/* Style the page numbers on hover */
+.paginate_button:not(.current):not(.disabled):hover {
+  background: #f0f0f0;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Adjust the "Showing X to Y of Z entries" text */
+.dataTables_info {
+  font-size: 14px;
+  color: #666;
+}
+
+.dt-paging-button {
+  margin: 0 5px;
+  border: none;
+  border-radius: 16px;
+  padding: 0 8px;
+  color: #9095a0ff;
+}
+
+.dt-paging-button.current {
+  color: white;
+  background-color: #f44b87ff;
+}

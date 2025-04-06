@@ -9,18 +9,10 @@ import { faCartShopping } from "@fortawesome/free-solid-svg-icons/faCartShopping
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 
-const OverviewCard = ({
-  title,
-  value,
-  percent,
-  isIncrease,
-  icon,
-  bgColor,
-  buttonColor,
-}) => {
+const OverviewCard = ({ title, value, percent, isIncrease, icon }) => {
   return (
     <div
-      className={`bg-[${bgColor}] rounded-lg p-4 flex items-start justify-between w-1/3`}
+      className={`bg-[#FEF0F5] rounded-lg p-4 flex items-start justify-between w-1/3`}
     >
       <div className="space-y-3">
         <p className="font-bold text-lg">{title}</p>
@@ -37,8 +29,8 @@ const OverviewCard = ({
           <span> periods of change</span>
         </p>
       </div>
-      <button className={`border border-[${buttonColor}] rounded-lg p-2 w-10`}>
-        <FontAwesomeIcon icon={icon} className={`text-[${buttonColor}]`} />
+      <button className={`border border-[#F44B87] rounded-lg p-2 w-10`}>
+        <FontAwesomeIcon icon={icon} className={`text-[#F44B87]`} />
       </button>
     </div>
   );
@@ -70,8 +62,9 @@ const Overview = () => {
 
       <div className="mt-4 flex items-center justify-between gap-4">
         {data &&
-          data.map((item, index) => (
+          data.map((item) => (
             <OverviewCard
+              key={item.id}
               title={item.title}
               value={item.total}
               percent={item.percent + "%"}
@@ -83,8 +76,6 @@ const Overview = () => {
                   ? faCircleUser
                   : faCartShopping
               }
-              bgColor={index == 0 ? "#FEF0F5" : "#F0F6FF"}
-              buttonColor={index == 0 ? "#F44B87" : "#2B80FF"}
             />
           ))}
       </div>
