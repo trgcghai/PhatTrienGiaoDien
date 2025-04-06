@@ -1,16 +1,18 @@
 import { faFile } from "@fortawesome/free-regular-svg-icons";
-import { faFileExport, faFileImport } from "@fortawesome/free-solid-svg-icons";
+import { faFileExport, faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import TableData from "../components/DataTable/DataTable";
 import { useCustomers } from "../hooks/useFetchCustomer";
 import { ModalContext } from "../context/ModalContext";
 import { useContext, useEffect } from "react";
 import { useFile } from "../hooks/useFile";
+import AddModal from "../components/Modal/AddModal";
+import Backdrop from "../components/Backdrop";
 
 const HomePage = () => {
   const { customers, loading, error, refetch } = useCustomers();
   const { exportToExcel } = useFile();
-  const { setOnSuccess } = useContext(ModalContext);
+  const { setOnSuccess, isOpen, toggleModal } = useContext(ModalContext);
 
   useEffect(() => {
     setOnSuccess(() => refetch);
@@ -31,9 +33,12 @@ const HomePage = () => {
         </div>
 
         <div className="flex items-center gap-4">
-          <button className="border cursor-pointer border-[#F44B87] text-[#F44B87] rounded-lg p-2">
-            <FontAwesomeIcon icon={faFileImport} className="mr-2" />
-            Import
+          <button
+            className="border cursor-pointer border-[#F44B87] text-[#F44B87] rounded-lg p-2"
+            onClick={toggleModal}
+          >
+            <FontAwesomeIcon icon={faPlusCircle} className="mr-2" />
+            Add
           </button>
           <button
             className="border cursor-pointer border-[#F44B87] text-[#F44B87] rounded-lg p-2"
@@ -52,6 +57,13 @@ const HomePage = () => {
         {error && <p className="text-red-500">Error: {error}</p>}
         {customers && <TableData data={customers.data} />}
       </div>
+
+      {isOpen && (
+        <>
+          <AddModal />
+          <Backdrop />
+        </>
+      )}
     </div>
   );
 };
