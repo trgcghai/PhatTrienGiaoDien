@@ -36,7 +36,7 @@ const HomePage = () => {
 
         <div className="flex items-center gap-4">
           <button
-            className="border cursor-pointer border-[#F44B87] text-[#F44B87] rounded-lg p-2"
+            className="border cursor-pointer border-[#F44B87] text-[#F44B87] rounded-lg p-2 hover:bg-[#F44B87] hover:text-white transition duration-300"
             onClick={() => {
               toggleModal();
               setModalType("add");
@@ -46,7 +46,7 @@ const HomePage = () => {
             Add
           </button>
           <button
-            className="border cursor-pointer border-[#F44B87] text-[#F44B87] rounded-lg p-2"
+            className="border cursor-pointer border-[#F44B87] text-[#F44B87] rounded-lg p-2 hover:bg-[#F44B87] hover:text-white transition duration-300"
             onClick={() => {
               exportToExcel(customers.data);
             }}

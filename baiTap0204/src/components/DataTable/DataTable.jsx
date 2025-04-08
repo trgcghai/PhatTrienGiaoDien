@@ -58,7 +58,7 @@ const TableData = ({ data }) => {
             return (
               <div className="flex items-center justify-center">
                 <button
-                  className="text-gray-400 px-2 cursor-pointer aspect-square rounded-sm border-2 border-gray-300"
+                  className="text-gray-400 px-2 cursor-pointer aspect-square hover:bg-[#F44B87] hover:text-white rounded-md"
                   onClick={() => {
                     toggleModal();
                     setModalType("edit");

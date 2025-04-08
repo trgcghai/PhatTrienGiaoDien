@@ -29,8 +29,10 @@ const OverviewCard = ({ title, value, percent, isIncrease, icon }) => {
           <span> periods of change</span>
         </p>
       </div>
-      <button className={`border border-[#F44B87] rounded-lg p-2 w-10`}>
-        <FontAwesomeIcon icon={icon} className={`text-[#F44B87]`} />
+      <button
+        className={`border border-[#F44B87] text-[#F44B87] hover:bg-[#F44B87] hover:text-white rounded-lg p-2 w-10`}
+      >
+        <FontAwesomeIcon icon={icon} />
       </button>
     </div>
   );

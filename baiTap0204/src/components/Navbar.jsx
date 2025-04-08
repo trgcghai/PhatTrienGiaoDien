@@ -54,7 +54,7 @@ const Navbar = () => {
                 to={item.path}
                 className={({ isActive }) => {
                   return (
-                    "w-full rounded-lg block p-2 text-gray-500" +
+                    "w-full rounded-lg block p-2 text-gray-500 hover:text-white hover:bg-[#F44B87]" +
                     (isActive ? " font-semibold text-white bg-[#F44B87]" : "")
                   );
                 }}
