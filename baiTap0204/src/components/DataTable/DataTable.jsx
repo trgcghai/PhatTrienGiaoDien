@@ -5,18 +5,16 @@ import { faPen } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useContext } from "react";
 import { ModalContext } from "../../context/ModalContext";
-import EditModal from "../Modal/EditModal";
-import Backdrop from "../Backdrop";
 
 const TableData = ({ data }) => {
   DataTable.use(DT);
 
-  const { isOpen, toggleModal, handleSetData } = useContext(ModalContext);
+  const { toggleModal, handleSetData, setModalType } = useContext(ModalContext);
 
   return (
     <>
       <DataTable
-        data={data}
+        data={data && data}
         columns={columns}
         slots={{
           0: (data) => (
@@ -36,35 +34,25 @@ const TableData = ({ data }) => {
           3: (data) => {
             const [year, month, day] = data.split("-");
             const date =
-              month.padStart(0, 2) + "/" + day.padStart(0, 2) + "/" + year;
+              month?.padStart(0, 2) + "/" + day?.padStart(0, 2) + "/" + year;
             return <p className="text-md">{date}</p>;
           },
           4: (data) => {
-            if (data == "New") {
-              return (
-                <div className="flex items-center justify-center">
-                  <p className="bg-[#f1f8fd] text-[#99cbf2] text-center block w-[50px] px-2 py-1 rounded-full">
-                    {data}
-                  </p>
-                </div>
-              );
-            } else if (data == "In-progress") {
-              return (
-                <div className="flex items-center justify-center">
-                  <p className="bg-[#fef9ee] text-[#98690c] text-center block w-[100px] px-2 py-1 rounded-full">
-                    {data}
-                  </p>
-                </div>
-              );
-            } else if (data == "Completed") {
-              return (
-                <div className="flex items-center justify-center">
-                  <p className="bg-[#eefdf3] text-[#1e833f] text-center block w-[100px] px-2 py-1 rounded-full">
-                    {data}
-                  </p>
-                </div>
-              );
-            }
+            return (
+              <div className="flex items-center justify-center">
+                <p
+                  className={`${
+                    data == "New"
+                      ? "bg-[#f1f8fd] text-[#99cbf2]"
+                      : data == "In-progress"
+                      ? "bg-[#fef9ee] text-[#98690c]"
+                      : "bg-[#eefdf3] text-[#1e833f]"
+                  } text-center font-bold block w-[110px] px-2 py-1 rounded-full`}
+                >
+                  {data}
+                </p>
+              </div>
+            );
           },
           5: (_, row) => {
             return (
@@ -73,6 +61,7 @@ const TableData = ({ data }) => {
                   className="text-gray-400 px-2 cursor-pointer aspect-square rounded-sm border-2 border-gray-300"
                   onClick={() => {
                     toggleModal();
+                    setModalType("edit");
                     handleSetData(row);
                   }}
                 >
@@ -107,13 +96,6 @@ const TableData = ({ data }) => {
           </tr>
         </thead>
       </DataTable>
-
-      {isOpen && (
-        <>
-          <EditModal />
-          <Backdrop />
-        </>
-      )}
     </>
   );
 };

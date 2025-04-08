@@ -8,11 +8,13 @@ import { useContext, useEffect } from "react";
 import { useFile } from "../hooks/useFile";
 import AddModal from "../components/Modal/AddModal";
 import Backdrop from "../components/Backdrop";
+import EditModal from "../components/Modal/EditModal";
 
 const HomePage = () => {
   const { customers, loading, error, refetch } = useCustomers();
   const { exportToExcel } = useFile();
-  const { setOnSuccess, isOpen, toggleModal } = useContext(ModalContext);
+  const { setOnSuccess, isOpen, toggleModal, modalType, setModalType } =
+    useContext(ModalContext);
 
   useEffect(() => {
     setOnSuccess(() => refetch);
@@ -35,7 +37,10 @@ const HomePage = () => {
         <div className="flex items-center gap-4">
           <button
             className="border cursor-pointer border-[#F44B87] text-[#F44B87] rounded-lg p-2"
-            onClick={toggleModal}
+            onClick={() => {
+              toggleModal();
+              setModalType("add");
+            }}
           >
             <FontAwesomeIcon icon={faPlusCircle} className="mr-2" />
             Add
@@ -53,14 +58,17 @@ const HomePage = () => {
       </div>
 
       <div>
-        {loading && <p>Loading...</p>}
+        {loading ? (
+          <p>Loading...</p>
+        ) : (
+          customers && <TableData data={customers.data} />
+        )}
         {error && <p className="text-red-500">Error: {error}</p>}
-        {customers && <TableData data={customers.data} />}
       </div>
 
       {isOpen && (
         <>
-          <AddModal />
+          {modalType === "add" ? <AddModal /> : <EditModal />}
           <Backdrop />
         </>
       )}
