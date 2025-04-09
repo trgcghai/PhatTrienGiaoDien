@@ -68,6 +68,7 @@ const Navbar = () => {
       </div>
 
       <div className="bg-[#F0F6FF] p-2 rounded-lg">
+        <img src="/image.png" alt="" />
         <p className="text-2xl font-bold text-center">V2.0 is available</p>
         <button className="mt-4 bg-white text-blue-400 border border-blue-400 w-full rounded-lg px-2 py-1">
           Try now
