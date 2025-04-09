@@ -31,6 +31,33 @@ function App() {
     },
   ];
 
+  const videoRecipes = [
+    {
+      id: 1,
+      title: "Salad with cabbage and shrimp",
+      image: "/dishimage.png",
+      time: "20 minutes",
+    },
+    {
+      id: 2,
+      title: "Salad of cave beans, shrimp and potatoes",
+      image: "/dishimage.png",
+      time: "25 minutes",
+    },
+    {
+      id: 3,
+      title: "Sunny-side up fried egg",
+      image: "/dishimage.png",
+      time: "10 minutes",
+    },
+    {
+      id: 4,
+      title: "Lotus delight salad",
+      image: "/dishimage.png",
+      time: "20 minutes",
+    },
+  ];
+
   return (
     <div className="">
       <Header />
@@ -41,6 +68,13 @@ function App() {
         subtitle="We have all your Independence Day sweets covered."
         recipes={summerRecipes}
         bgColor="white"
+      />
+
+      <RecipeSection
+        title="Recipes With Videos"
+        subtitle="Cooking Up Culinary Creations with Step-by-Step Videos"
+        recipes={videoRecipes}
+        bgColor="gray-50"
       />
     </div>
   );
