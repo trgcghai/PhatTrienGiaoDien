@@ -11,10 +11,10 @@ const RootLayout = () => {
       </div>
       <div className="col-span-4 row-span-4">
         <Header />
-        <Overview />
-        <div className="p-6">
+        {/* <Overview /> */}
+        {/* <div className="p-6">
           <Outlet />
-        </div>
+        </div> */}
       </div>
     </div>
   );

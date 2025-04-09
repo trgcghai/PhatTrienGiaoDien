@@ -44,7 +44,7 @@ const Navbar = () => {
 
   return (
     <nav className="border-r border-gray-300 h-screen p-4 flex flex-col justify-between">
-      <div>
+      {/* <div>
         <img src="/logo.png" className="h-16" />
         <div className="mt-4 space-y-2">
           {items.map((item) => {
@@ -73,7 +73,8 @@ const Navbar = () => {
         <button className="mt-4 bg-white text-blue-400 border border-blue-400 w-full rounded-lg px-2 py-1">
           Try now
         </button>
-      </div>
+      </div> */}
+      Navbar
     </nav>
   );
 };
