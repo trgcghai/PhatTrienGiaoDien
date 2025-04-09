@@ -1,5 +1,6 @@
 import React from "react";
 import { ShoppingCart, DollarSign, Users } from "lucide-react";
+import DetailedReport from "../components/DetailedReport";
 
 const Dashboard = () => {
   const stats = [
@@ -56,6 +57,8 @@ const Dashboard = () => {
           </div>
         ))}
       </div>
+
+      <DetailedReport />
     </div>
   );
 };
