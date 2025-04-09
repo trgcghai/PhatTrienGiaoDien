@@ -1,5 +1,6 @@
 import "./App.css";
 import EditorPicks from "./components/EditorPicks";
+import Footer from "./components/Footer";
 import Header from "./components/Header";
 import Hero from "./components/Hero";
 import RecipeSection from "./components/RecipeSection";
@@ -134,6 +135,8 @@ function App() {
         subtitle="Curated Culinary Delights: Handpicked Favorites by Our Expert Editors!"
         picks={editorPicks}
       />
+
+      <Footer />
     </div>
   );
 }
