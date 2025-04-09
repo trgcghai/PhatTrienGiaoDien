@@ -9,6 +9,32 @@ const CustomerModal = ({ isOpen, onClose, onSave, title, customer }) => {
     setFormData(customer);
   }, [customer]);
 
+  const validateForm = () => {
+    const newErrors = {};
+
+    if (!formData.customerName.trim()) {
+      newErrors.customerName = "Tên khách hàng không được để trống";
+    }
+
+    if (!formData.companyName.trim()) {
+      newErrors.companyName = "Tên công ty không được để trống";
+    }
+
+    if (!formData.orderValue.toString().trim()) {
+      newErrors.orderValue = "Giá trị đơn hàng không được để trống";
+    } else if (isNaN(formData.orderValue)) {
+      newErrors.orderValue = "Giá trị đơn hàng phải là số";
+    }
+
+    if (!formData.orderDate.trim()) {
+      newErrors.orderDate = "Ngày đặt hàng không được để trống";
+    }
+
+    console.log("Errors:", newErrors); // Debugging line to check errors
+
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -19,7 +45,18 @@ const CustomerModal = ({ isOpen, onClose, onSave, title, customer }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSave(formData);
+
+    if (!validateForm()) {
+      return;
+    }
+
+    // Chuyển đổi orderValue thành số nếu là chuỗi
+    const processedData = {
+      ...formData,
+      orderValue: formData.orderValue.toString().replace(/^\$/, ""), // Loại bỏ ký tự $ nếu có
+    };
+
+    onSave(processedData);
   };
 
   if (!isOpen) return null;
@@ -48,7 +85,7 @@ const CustomerModal = ({ isOpen, onClose, onSave, title, customer }) => {
               <input
                 type="text"
                 id="name"
-                name="name"
+                name="customerName"
                 value={formData.customerName}
                 onChange={handleChange}
                 className="w-full p-2 border border-gray-300 rounded-md"
@@ -66,7 +103,7 @@ const CustomerModal = ({ isOpen, onClose, onSave, title, customer }) => {
               <input
                 type="text"
                 id="company"
-                name="company"
+                name="companyName"
                 value={formData.companyName}
                 onChange={handleChange}
                 className="w-full p-2 border border-gray-300 rounded-md"
@@ -100,7 +137,7 @@ const CustomerModal = ({ isOpen, onClose, onSave, title, customer }) => {
                 Order Date
               </label>
               <input
-                type="text"
+                type="date"
                 id="orderDate"
                 name="orderDate"
                 value={formData.orderDate}

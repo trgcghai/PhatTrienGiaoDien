@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useMemo } from "react";
+import { useMemo, useState } from "react";
 import { useTable, useSortBy, usePagination, useRowSelect } from "react-table";
 import {
   Edit,
@@ -8,45 +8,26 @@ import {
   ChevronUp,
   ChevronLeft,
   ChevronRight,
-  Plus,
   Download,
+  Plus,
+  Trash2,
 } from "lucide-react";
-import axios from "axios";
 import CustomerModal from "./CustomerModal";
+import { useCustomers } from "../hooks/useCustomers";
 
-const DetailedReport = () => {
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [totalResults, setTotalResults] = useState(0);
+const CustomerTable = () => {
+  const {
+    customers,
+    loading,
+    error,
+    totalResults,
+    addCustomer,
+    updateCustomer,
+  } = useCustomers();
+
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [currentCustomer, setCurrentCustomer] = useState(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const response = await axios.get(
-          "https://66eee7fa3ed5bb4d0bf24f82.mockapi.io/api/v1/vocabularyDB/customer"
-        );
-        const formattedData = response.data.map((user) => ({
-          ...user,
-          avatar: "/Avatar.png",
-        }));
-
-        setData(formattedData);
-        setTotalResults(formattedData.length);
-        setLoading(false);
-      } catch (err) {
-        setError("Không thể tải dữ liệu. Vui lòng thử lại sau.");
-        setLoading(false);
-        console.error("Error fetching data:", err);
-      }
-    };
-
-    fetchData();
-  }, []);
 
   const getStatusClass = (status) => {
     switch (status) {
@@ -61,26 +42,51 @@ const DetailedReport = () => {
     }
   };
 
-  const handleAddCustomer = (newCustomer) => {
-    const newId = Math.max(...data.map((item) => item.id)) + 1;
-    const customerWithId = {
-      ...newCustomer,
-      id: newId,
-      avatar: `/placeholder.svg?height=40&width=40&text=${newCustomer.name.charAt(
-        0
-      )}`,
-    };
-    setData([customerWithId, ...data]);
-    setTotalResults(totalResults + 1);
+  const handleExport = () => {
+    // Tạo dữ liệu CSV
+    const headers = [
+      "Customer Name",
+      "Company",
+      "Order Value",
+      "Order Date",
+      "Status",
+      "Email",
+      "Phone",
+    ];
+    const csvData = [
+      headers.join(","),
+      ...customers.map((item) =>
+        [
+          item.name,
+          item.company,
+          item.orderValue,
+          item.orderDate,
+          item.status,
+          item.email,
+          item.phone,
+        ].join(",")
+      ),
+    ].join("\n");
+
+    // Tạo blob và download
+    const blob = new Blob([csvData], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.setAttribute("href", url);
+    link.setAttribute("download", "customer_data.csv");
+    link.style.visibility = "hidden";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  const handleAddCustomer = async (newCustomer) => {
+    await addCustomer(newCustomer);
     setIsAddModalOpen(false);
   };
 
-  const handleEditCustomer = (updatedCustomer) => {
-    setData(
-      data.map((item) =>
-        item.id === updatedCustomer.id ? updatedCustomer : item
-      )
-    );
+  const handleEditCustomer = async (updatedCustomer) => {
+    await updateCustomer(updatedCustomer.id, updatedCustomer);
     setIsEditModalOpen(false);
   };
 
@@ -93,14 +99,11 @@ const DetailedReport = () => {
     () => [
       {
         Header: "CUSTOMER NAME",
-        accessor: "name",
+        accessor: "customerName",
         Cell: ({ row }) => (
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-full overflow-hidden">
-              <img
-                src={row.original.avatar || "/placeholder.svg"}
-                alt={row.original.name}
-              />
+            <div className="w-8 h-8 rounded-full overflow-hidden flex items-center justify-center">
+              <img src="/Avatar.png" alt={row.original.customerName} />
             </div>
             <span>{row.original.customerName}</span>
           </div>
@@ -113,6 +116,7 @@ const DetailedReport = () => {
       {
         Header: "ORDER VALUE",
         accessor: "orderValue",
+        Cell: ({ value }) => <span>${value}</span>,
       },
       {
         Header: "ORDER DATE",
@@ -142,7 +146,7 @@ const DetailedReport = () => {
             <Edit size={18} />
           </button>
         ),
-        width: 40,
+        width: 80,
       },
     ],
     []
@@ -165,7 +169,7 @@ const DetailedReport = () => {
   } = useTable(
     {
       columns,
-      data,
+      data: customers,
       initialState: { pageIndex: 0, pageSize: 6 },
     },
     useSortBy,
@@ -173,7 +177,7 @@ const DetailedReport = () => {
     useRowSelect
   );
 
-  if (loading) {
+  if (loading && customers.length === 0) {
     return (
       <div className="bg-white rounded-lg border border-gray-200 p-8 flex justify-center">
         <div className="text-center">
@@ -184,7 +188,7 @@ const DetailedReport = () => {
     );
   }
 
-  if (error) {
+  if (error && customers.length === 0) {
     return (
       <div className="bg-white rounded-lg border border-gray-200 p-8">
         <div className="text-center text-red-500">
@@ -199,44 +203,6 @@ const DetailedReport = () => {
       </div>
     );
   }
-
-  const handleExport = () => {
-    // Tạo dữ liệu CSV
-    const headers = [
-      "Customer Name",
-      "Company",
-      "Order Value",
-      "Order Date",
-      "Status",
-      "Email",
-      "Phone",
-    ];
-    const csvData = [
-      headers.join(","),
-      ...data.map((item) =>
-        [
-          item.customerName,
-          item.companyName,
-          item.orderValue,
-          item.orderDate,
-          item.status,
-          item.email,
-          item.phone,
-        ].join(",")
-      ),
-    ].join("\n");
-
-    // Tạo blob và download
-    const blob = new Blob([csvData], { type: "text/csv;charset=utf-8;" });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.setAttribute("href", url);
-    link.setAttribute("download", "customer_data.csv");
-    link.style.visibility = "hidden";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
 
   return (
     <>
@@ -264,7 +230,14 @@ const DetailedReport = () => {
           </button>
         </div>
       </div>
+
       <div className="bg-white rounded-lg border border-gray-200">
+        {loading && customers.length > 0 && (
+          <div className="absolute inset-0 bg-white bg-opacity-70 flex items-center justify-center z-10">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-pink-500"></div>
+          </div>
+        )}
+
         <div className="overflow-x-auto">
           <table {...getTableProps()} className="w-full">
             <thead>
@@ -311,9 +284,9 @@ const DetailedReport = () => {
                   >
                     {row.cells.map((cell) => (
                       <td
+                        key={cell.id}
                         {...cell.getCellProps()}
                         className="p-4"
-                        key={cell.id}
                       >
                         {cell.render("Cell")}
                       </td>
@@ -400,14 +373,13 @@ const DetailedReport = () => {
         onSave={handleAddCustomer}
         title="Add New Customer"
         customer={{
-          name: "",
-          company: "",
+          customerName: "",
+          companyName: "",
           orderValue: "",
           orderDate: "",
           status: "New",
-          email: "",
-          phone: "",
         }}
+        isLoading={loading}
       />
 
       {/* Edit Customer Modal */}
@@ -418,10 +390,11 @@ const DetailedReport = () => {
           onSave={handleEditCustomer}
           title="Edit Customer"
           customer={currentCustomer}
+          isLoading={loading}
         />
       )}
     </>
   );
 };
 
-export default DetailedReport;
+export default CustomerTable;
