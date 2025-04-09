@@ -8,7 +8,7 @@ const RootLayout = () => {
       <Sidebar />
       <main className="bg-gray-50">
         <Header />
-        <div className="container mx-auto px-8 py-6">
+        <div className="container mx-auto p-6">
           <Outlet />
         </div>
       </main>
