@@ -12,12 +12,16 @@ import {
   Download,
 } from "lucide-react";
 import axios from "axios";
+import CustomerModal from "./CustomerModal";
 
 const DetailedReport = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [totalResults, setTotalResults] = useState(0);
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [currentCustomer, setCurrentCustomer] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -55,6 +59,34 @@ const DetailedReport = () => {
       default:
         return "bg-gray-100 text-gray-600";
     }
+  };
+
+  const handleAddCustomer = (newCustomer) => {
+    const newId = Math.max(...data.map((item) => item.id)) + 1;
+    const customerWithId = {
+      ...newCustomer,
+      id: newId,
+      avatar: `/placeholder.svg?height=40&width=40&text=${newCustomer.name.charAt(
+        0
+      )}`,
+    };
+    setData([customerWithId, ...data]);
+    setTotalResults(totalResults + 1);
+    setIsAddModalOpen(false);
+  };
+
+  const handleEditCustomer = (updatedCustomer) => {
+    setData(
+      data.map((item) =>
+        item.id === updatedCustomer.id ? updatedCustomer : item
+      )
+    );
+    setIsEditModalOpen(false);
+  };
+
+  const openEditModal = (customer) => {
+    setCurrentCustomer(customer);
+    setIsEditModalOpen(true);
   };
 
   const columns = useMemo(
@@ -102,8 +134,11 @@ const DetailedReport = () => {
       {
         Header: "",
         id: "actions",
-        Cell: () => (
-          <button className="text-gray-400 hover:text-gray-600">
+        Cell: ({ row }) => (
+          <button
+            className="text-gray-400 hover:text-gray-600"
+            onClick={() => openEditModal(row.original)}
+          >
             <Edit size={18} />
           </button>
         ),
@@ -213,7 +248,10 @@ const DetailedReport = () => {
           <h2 className="text-xl font-bold">Detailed report</h2>
         </div>
         <div className="flex gap-2">
-          <button className="flex items-center gap-1 px-4 py-2 border border-pink-500 rounded-lg text-pink-500 hover:bg-pink-50">
+          <button
+            className="flex items-center gap-1 px-4 py-2 border border-pink-500 rounded-lg text-pink-500 hover:bg-pink-50"
+            onClick={() => setIsAddModalOpen(true)}
+          >
             <Plus size={16} />
             <span>Import</span>
           </button>
@@ -354,6 +392,34 @@ const DetailedReport = () => {
           </div>
         </div>
       </div>
+
+      {/* Add Customer Modal */}
+      <CustomerModal
+        isOpen={isAddModalOpen}
+        onClose={() => setIsAddModalOpen(false)}
+        onSave={handleAddCustomer}
+        title="Add New Customer"
+        customer={{
+          name: "",
+          company: "",
+          orderValue: "",
+          orderDate: "",
+          status: "New",
+          email: "",
+          phone: "",
+        }}
+      />
+
+      {/* Edit Customer Modal */}
+      {currentCustomer && (
+        <CustomerModal
+          isOpen={isEditModalOpen}
+          onClose={() => setIsEditModalOpen(false)}
+          onSave={handleEditCustomer}
+          title="Edit Customer"
+          customer={currentCustomer}
+        />
+      )}
     </>
   );
 };
