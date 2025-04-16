@@ -8,6 +8,7 @@ import CounterRedux from "./components/CounterRedux.jsx";
 import CounterReduxToolkit from "./components/CounterReduxToolkit.jsx";
 import { Provider } from "react-redux";
 import { reduxStore } from "./libs/redux/store.js";
+import { toolkitStore } from "./libs/reduxToolkit/store.js";
 
 const router = createBrowserRouter([
   {
@@ -28,7 +29,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/counterReduxToolkit",
-        element: <CounterReduxToolkit />,
+        element: (
+          <Provider store={toolkitStore}>
+            <CounterReduxToolkit />
+          </Provider>
+        ),
       },
     ],
   },
