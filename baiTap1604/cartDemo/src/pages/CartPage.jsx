@@ -1,7 +1,10 @@
+import CartSummary from "../components/CartSummary";
+
 const CartPage = () => {
   return (
-    <div className="">
-      <h1>Your Shopping Cart</h1>
+    <div className="cart-page">
+      <p>Your cart is empty.</p>
+      <CartSummary />
     </div>
   );
 };
